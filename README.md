@@ -1,6 +1,12 @@
-# Vite App Docker Setup with Environment Variables
+# React News App
 
-This README explains how to build and run the Docker image for our Vite application, which requires certain environment variables.
+A Vite-powered React application for aggregating news from various sources.
+
+## Repository
+
+This project is hosted on GitHub:
+
+[https://github.com/kumard3/react-news](https://github.com/kumard3/react-news)
 
 ## Prerequisites
 
@@ -17,7 +23,11 @@ The application uses the following environment variables:
 
 ## Setup
 
-1. Ensure you have all the project files in a directory on your local machine.
+1. Clone the repository:
+   ```
+   git clone https://github.com/kumard3/react-news.git
+   cd react-news
+   ```
 
 2. Create a `.env` file in the root directory of the project with your API keys:
    ```
@@ -30,14 +40,14 @@ The application uses the following environment variables:
 
 ## Building the Docker Image
 
-To build the Docker image, run the following command in the directory containing the Dockerfile:
+To build the Docker image, run the following command in the repository root:
 
 ```bash
 docker build \
   --build-arg VITE_NYT_API_KEY=$(grep VITE_NYT_API_KEY .env | cut -d '=' -f2) \
   --build-arg VITE_NEWS_API_KEY=$(grep VITE_NEWS_API_KEY .env | cut -d '=' -f2) \
   --build-arg VITE_NEWS_DATA_API_KEY=$(grep VITE_NEWS_DATA_API_KEY .env | cut -d '=' -f2) \
-  -t vite-news-app .
+  -t react-news-app .
 ```
 
 This command reads the environment variables from your `.env` file and passes them as build arguments to Docker.
@@ -47,7 +57,7 @@ This command reads the environment variables from your `.env` file and passes th
 After building the image, you can run it with:
 
 ```bash
-sudo docker run -p 3000:80 vite-news-app
+docker run -p 3000:80 vite-news-app
 ```
 
 This command starts the container and maps port 3000 of the container to port 3000 on your host machine.
@@ -74,18 +84,13 @@ For local development without Docker:
    pnpm run dev
    ```
 
+
+
 ## Notes
 
-- The `.env` file contains sensitive information and should not be shared or exposed publicly.
+- The `.env` file contains sensitive information and should not be committed to the repository. It's included in `.gitignore` by default.
 - If you need to change environment variables without rebuilding the image, consider using runtime environment injection methods provided by your deployment platform.
 
-## Troubleshooting
 
-If you encounter any issues, please check the following:
 
-1. Ensure all required environment variables are set in your `.env` file.
-2. Make sure Docker is running on your machine.
-3. Check if the required ports are free on your host machine.
-4. For Vite-specific issues, refer to the [Vite documentation](https://vitejs.dev/guide/).
-
-If you're encountering persistent problems, consider checking the Vite Discord community or Stack Overflow for support.
+If you're encountering persistent problems, please open an issue in the GitHub repository.
